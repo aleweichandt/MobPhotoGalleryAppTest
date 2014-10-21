@@ -1,3 +1,4 @@
+
 #ifndef __PHOTO_OBJECT_H__
 #define __PHOTO_OBJECT_H__
 

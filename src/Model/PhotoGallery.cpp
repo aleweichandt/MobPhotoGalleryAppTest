@@ -1,9 +1,9 @@
-#include "StdAfx.h"
+#include "../StdAfx.h"
 #include "PhotoGallery.h"
-#include "HttpRequest.h"
+#include "PhotoDirectory.h"
 
 PhotoGallery::PhotoGallery():
-mState(STATE_INIT) {
+mState(G_STATE_INIT) {
 
 }
 
@@ -13,22 +13,27 @@ PhotoGallery::~PhotoGallery() {
 
 void PhotoGallery::update(int dt) {
 	switch(mState) {
-	case STATE_INIT: {
+	case G_STATE_INIT: {
 		//Download INIT.json
 		break;
 	}
-	case STATE_RUN: {
+	case G_STATE_RUN: {
 		//ImageDirectories created and downloading by theirselves
 		break;
 	}
-	case STATE_END: {
+	case G_STATE_END: {
 		break;
+	}
 	}
 }
 
-void PhotoGallery::onInitDownloaded(HttpRequest request) {
-	if(request.getResultCode() == 200) {
+void PhotoGallery::onUpdate(HttpRequest* req){
+	//do nothing
+}
+
+void PhotoGallery::onComplete(HttpRequest* req){
+	if(req->getResultCode() == 200) {
 		//TODO get data and init PhotoDirectories
-		mState = STATE_RUN;
+		mState = G_STATE_RUN;
 	}
 }

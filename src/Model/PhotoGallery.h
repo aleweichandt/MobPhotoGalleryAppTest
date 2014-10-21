@@ -1,28 +1,33 @@
+
 #ifndef __PHOTO_GALLERY_H__
 #define __PHOTO_GALLERY_H__
 
-class HttpRequest;
+#include "connection/HttpRequest.h"
+#include <vector>
 
-class PhotoGallery {
+class PhotoDirectory;
+
+class PhotoGallery : public HttpRequest::HttpRequestInterface {
 public:
-	enum STATE
+	enum gal_state
 	{
-		STATE_INIT = 0,
-		STATE_RUN,
-		STATE_END
+		G_STATE_INIT = 0,
+		G_STATE_RUN,
+		G_STATE_END
 	};
 public:
 	PhotoGallery();
 	virtual ~PhotoGallery();
 	void update(int dt);
 
-	STATE getState() { return mState; };
+	gal_state getState() { return mState; };
 
 //callbacks
-	void onInitDownloaded(HttpRequest request);
+	void onUpdate(HttpRequest* req);
+	void onComplete(HttpRequest* req);
 private:
-	STATE mState;
-	std::vector<PhotoDirectory> mPhotoDirectories;
+	gal_state mState;
+	std::vector<PhotoDirectory*> mPhotoDirectories;
 };
 
 #endif
