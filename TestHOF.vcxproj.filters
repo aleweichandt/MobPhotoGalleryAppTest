@@ -2,38 +2,17 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <UniqueIdentifier>{734125f6-e219-4efe-8b10-94a18604967b}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\model">
-      <UniqueIdentifier>{4a7e8813-7be5-4ef9-a585-92377a6ea19e}</UniqueIdentifier>
+      <UniqueIdentifier>{b83784cd-9eea-4d0b-958f-ebc81f38c65c}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\model\platform">
-      <UniqueIdentifier>{26017df9-9bdd-4a9b-a3de-804acf060287}</UniqueIdentifier>
+      <UniqueIdentifier>{cc011ce7-a8e5-4e9f-8ab0-2a0962791793}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\stdafx.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\targetver.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model\HttpRequest.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model\PhotoDirectory.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model\PhotoGallery.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model\PhotoObject.h">
-      <Filter>src\model</Filter>
-    </ClInclude>
+    <Filter Include="src\model\connection">
+      <UniqueIdentifier>{6112ca2b-2320-4e65-9a6f-0e998f8ce792}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\stdafx.cpp">
@@ -51,8 +30,34 @@
     <ClCompile Include="src\Model\PhotoObject.cpp">
       <Filter>src\model</Filter>
     </ClCompile>
-    <ClCompile Include="src\Model\platform\HttpRequestWin32.cpp">
-      <Filter>src\model\platform</Filter>
+    <ClCompile Include="src\Model\connection\HttpRequestCurl.cpp">
+      <Filter>src\model\connection</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model\connection\HttpRequest.cpp">
+      <Filter>src\model\connection</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\stdafx.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\targetver.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\PhotoDirectory.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\PhotoGallery.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\PhotoObject.h">
+      <Filter>src\model</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\connection\HttpRequest.h">
+      <Filter>src\model\connection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\connection\HttpRequestCurl.h">
+      <Filter>src\model\connection</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
