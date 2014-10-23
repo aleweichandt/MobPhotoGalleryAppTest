@@ -15,10 +15,13 @@ HttpRequestCurl::~HttpRequestCurl(void)
 }
 
 void HttpRequestCurl::_performGET() {
+	if(!mResult) {
+		mResult = (char*)malloc(1);
+		mResultSize = 1;
+	}
 	struct MemoryStruct chunk;
- 
 	chunk.memory = mResult;
-	chunk.size = mContentCurrent; 
+	chunk.size = mResultSize; 
 
 	curl_easy_setopt(mCurl, CURLOPT_URL, mUrl.c_str());
 	//TODO add headers
@@ -31,15 +34,13 @@ void HttpRequestCurl::_performGET() {
 		curl_easy_getinfo(mCurl,CURLINFO_RESPONSE_CODE, &respcode);
 		mResultCode = (unsigned int) respcode;
 	}
-	if(chunk.memory) {
-		mContentCurrent = chunk.size;
-		free(chunk.memory);
-	}
+	mResultSize = chunk.size;
+	mBytesOffset += chunk.size;
 }
 
 void HttpRequestCurl::_performRangeGET(int range) {
 	std::ostringstream rangeStr;
-	rangeStr << (mContentCurrent+1) << "-" << range;
+	rangeStr << (mBytesOffset+1) << "-" << range;
 	curl_easy_setopt(mCurl, CURLOPT_RANGE, rangeStr.str().c_str());
 	this->_performGET();
 }

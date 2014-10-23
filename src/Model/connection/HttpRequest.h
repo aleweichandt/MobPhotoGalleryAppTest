@@ -52,10 +52,11 @@ protected:
 	HTTP_METHOD							mMethod;
 	std::map<std::string,std::string>	mHeaders;
 	char*								mBody;
+	unsigned long						mBytesOffset;
 	
+	size_t					mResultSize;
 	unsigned int 			mResultCode;
 	char*					mResult;
-	unsigned long			mContentCurrent;
 
 //must implement
 	virtual void _performGET() = 0;

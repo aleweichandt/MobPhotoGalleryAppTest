@@ -8,13 +8,20 @@ mMethod(GET),
 mBody(0),
 mResultCode(0),
 mResult(0),
+mResultSize(0),
 mState(HRS_ERROR),
-mContentCurrent(0)
+mBytesOffset(0)
 {
 }
 
 HttpRequest::~HttpRequest() {
 	mHeaders.clear();
+	if(mResult) {
+		free(mResult);
+	}
+	if(mBody) {
+		free(mBody);
+	}
 }
 
 void HttpRequest::setUrl(std::string url) {
@@ -34,7 +41,7 @@ void HttpRequest::setBody(const char* body) {
 }
 
 void HttpRequest::setRangeBytesOffset(unsigned long offset) {
-	mContentCurrent = offset;
+	mBytesOffset = offset;
 }
 
 unsigned int HttpRequest::getResultCode() {

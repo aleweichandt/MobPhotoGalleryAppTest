@@ -48,7 +48,7 @@ void PhotoGallery::onUpdate(HttpRequest* req){
 void PhotoGallery::onComplete(HttpRequest* req){
 	std::cout<<"COMPLETE JSON LOAD";
 	if(req->getResultCode() == 200) {
-		//TODO get data and init PhotoDirectories
+		std::cout << req->getResult();//TODO get data and init PhotoDirectories
 		mState = G_STATE_RUN;
 	}
 }
