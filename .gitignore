@@ -1,0 +1,6 @@
+/bin/*
+/build/*
+/Debug/*
+/ipch/*
+/TestHOF.opensdf
+/TestHOF.sdf
