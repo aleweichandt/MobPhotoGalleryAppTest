@@ -1,16 +1,23 @@
 #ifndef __HTTP_REQUEST_H__
 #define __HTTP_REQUEST_H__
 
+#define RANGE_SPEED 16000;
+
 enum HTTP_METHOD {
 	GET,
 	POST
 };
 
 class HttpRequest
-{	
-	typedef void (*onCompleteCallback)(HttpRequest*);
-	typedef void (*onUpdateCallback)(HttpRequest*);
+{
 public:
+	enum HttpRequestState {
+		HRS_ERROR = -1,
+		HRS_INIT,
+		HRS_RUN,
+		HRS_DONE
+	};
+
 	class HttpRequestInterface {
 	public:
 		virtual void onUpdate(HttpRequest* req) = 0;
@@ -20,26 +27,40 @@ public:
 	HttpRequest(void);
 	virtual ~HttpRequest(void);
 //setup
-	virtual HttpRequest* setUrl(const char* url) = 0;
-	virtual HttpRequest* setMethod(HTTP_METHOD method) = 0;
-	virtual HttpRequest* setHeader(const char* headerName, const char* headerValue) = 0;	
-	virtual HttpRequest* setBody(unsigned char*) = 0; //TODO check data type
-	virtual void		 send() = 0;
-//result
-	short			getResultCode();
-	unsigned char*	getResult(); //TODO check result data type
-	
-	HttpRequest*	setUpdateCallback(onUpdateCallback* callback = 0, HttpRequestInterface* caller = 0);
-	HttpRequest*	setCompleteCallback(onCompleteCallback* callback = 0, HttpRequestInterface* caller = 0);
+	void setUrl(const std::string url);
+	void setMethod(HTTP_METHOD method);
+	void setHeader(const std::string headerName, const std::string headerValue);	
+	void setBody(const char* body);
+	void setRangeBytesOffset(unsigned long offset);
+	void send(bool async = true);
+//update
+	void update(int dt);
 
-private:
-	onUpdateCallback* 		mOnUpdateCb;
-	onCompleteCallback* 	mOnCompleteCb;
+//result
+	unsigned int	getResultCode();
+	char*			getResult(); //TODO check result data type
+	
+	void addUpdateListener(HttpRequestInterface* caller = 0);
+	void addCompleteListener(HttpRequestInterface* caller = 0);
+
+protected:
 	HttpRequestInterface*	mOnUpdateCaller;
 	HttpRequestInterface*	mOnCompleteCaller;
+
+	HttpRequestState					mState;
+	std::string							mUrl;
+	HTTP_METHOD							mMethod;
+	std::map<std::string,std::string>	mHeaders;
+	char*								mBody;
 	
 	unsigned int 			mResultCode;
-	unsigned char*			mResult;
+	char*					mResult;
+	unsigned long			mContentCurrent;
+
+//must implement
+	virtual void _performGET() = 0;
+	virtual void _performRangeGET(int range) = 0;
+	virtual void _performPOST() = 0;
 };
 
 

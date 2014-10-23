@@ -5,6 +5,8 @@
 #include "connection/HttpRequest.h"
 #include <vector>
 
+#define SERVER_BASE_URL "localhost/server";
+
 class PhotoDirectory;
 
 class PhotoGallery : public HttpRequest::HttpRequestInterface {
@@ -28,6 +30,7 @@ public:
 private:
 	gal_state mState;
 	std::vector<PhotoDirectory*> mPhotoDirectories;
+	HttpRequest* mInitRequest;
 };
 
 #endif

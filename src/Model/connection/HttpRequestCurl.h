@@ -7,19 +7,22 @@
 class HttpRequestCurl : public HttpRequest
 {
 public:
+
 	HttpRequestCurl(void);
 	virtual ~HttpRequestCurl(void);
-//setup
-	HttpRequest* setUrl(char* url);
-	HttpRequest* setMethod(HTTP_METHOD method);
-	HttpRequest* setHeader(char* headerName, char* headerValue);	
-	HttpRequest* setBody(unsigned char*) = 0; //TODO check data type
-	void		 send();
-
 private:
+	struct MemoryStruct {
+		char *memory;
+		size_t size;
+	};
+
 	CURL* mCurl;
-	
-	
+
+	void _performGET();
+	void _performRangeGET(int range);
+	void _performPOST();
+
+	static size_t WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp);
 };
 
 #endif
