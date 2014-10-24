@@ -10,7 +10,8 @@ mResultCode(0),
 mResult(0),
 mResultSize(0),
 mState(HRS_ERROR),
-mBytesOffset(0)
+mBytesOffset(0),
+mContentLength(0)
 {
 }
 
@@ -48,8 +49,9 @@ unsigned int HttpRequest::getResultCode() {
 	return mResultCode; 
 };
 
-char* HttpRequest::getResult() { 
-	return mResult;
+size_t HttpRequest::getResult(char* &result) { 
+	result = mResult;
+	return mResultSize;
 };
 	
 void HttpRequest::addUpdateListener(HttpRequestInterface* caller) {
@@ -76,8 +78,8 @@ void HttpRequest::send(bool async)
 void HttpRequest::update(int dt) {
 	switch(mState) {
 		case HRS_INIT: {
-			//setup
-			mState = HRS_RUN;
+			_performHEAD();
+			mState = (mResultCode==200)?HRS_RUN:HRS_DONE;
 			break;
 		}
 		case HRS_RUN: {
@@ -85,11 +87,15 @@ void HttpRequest::update(int dt) {
 				_performPOST();
 				mState = HRS_DONE;
 			} else {
-				int bytes = dt * RANGE_SPEED;
+				int bytes = (dt?dt:1) * RANGE_SPEED;
 				_performRangeGET(bytes);
-				if(this->getResultCode() != 206) {
+				if(mResultCode != 206) {
 					mState = HRS_DONE;
 				} else {
+					if(mResultSize >= mContentLength) {
+						mResultCode = 200;
+						mState = HRS_DONE;
+					}
 					if(mOnUpdateCaller) {
 						mOnUpdateCaller->onUpdate(this);
 					}

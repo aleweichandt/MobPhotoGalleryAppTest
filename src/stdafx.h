@@ -16,7 +16,9 @@
 #include <sstream>
 #include <iostream>
 
-
+#ifdef _DEBUG
+#define DEBUG_LOG 1
+#endif
 
 
 // TODO: mencionar aquí los encabezados adicionales que el programa necesita

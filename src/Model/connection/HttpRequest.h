@@ -38,7 +38,7 @@ public:
 
 //result
 	unsigned int	getResultCode();
-	char*			getResult(); //TODO check result data type
+	size_t			getResult(char* &result); //TODO check result data type
 	
 	void addUpdateListener(HttpRequestInterface* caller = 0);
 	void addCompleteListener(HttpRequestInterface* caller = 0);
@@ -52,13 +52,17 @@ protected:
 	HTTP_METHOD							mMethod;
 	std::map<std::string,std::string>	mHeaders;
 	char*								mBody;
+
+//must fill this values
 	unsigned long						mBytesOffset;
+	unsigned long						mContentLength;
 	
 	size_t					mResultSize;
 	unsigned int 			mResultCode;
 	char*					mResult;
 
 //must implement
+	virtual void _performHEAD() = 0;
 	virtual void _performGET() = 0;
 	virtual void _performRangeGET(int range) = 0;
 	virtual void _performPOST() = 0;

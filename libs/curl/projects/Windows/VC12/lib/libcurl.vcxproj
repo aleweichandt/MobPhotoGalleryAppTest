@@ -546,7 +546,7 @@
     <IntDir Condition="'$(Configuration)|$(Platform)'=='DLL Release|x64'">$(OutDir)lib\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DLL Release|x64'">false</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='LIB Debug|Win32'">$(SolutionDir)build\$(Platform)\libs</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='LIB Debug|Win32'">$(OutDir)lib\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='LIB Debug|Win32'">$(SolutionDir)build\$(Platform)\comp\$(ProjectName)</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='LIB Debug|x64'">..\..\..\..\build\Win64\VC12\$(Configuration)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='LIB Debug|x64'">$(OutDir)lib\</IntDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='LIB Release|Win32'">..\..\..\..\build\Win32\VC12\$(Configuration)\</OutDir>

@@ -6,7 +6,6 @@
 #include <vector>
 
 #define SERVER_BASE_URL "localhost/server";
-
 class PhotoDirectory;
 
 class PhotoGallery : public HttpRequest::HttpRequestInterface {

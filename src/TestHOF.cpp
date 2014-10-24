@@ -5,7 +5,6 @@
 #include "Model\PhotoGallery.h"
 #include "Windows.h"
 
-
 int _tmain(int argc, _TCHAR* argv[])
 {
 	PhotoGallery* app = new PhotoGallery();

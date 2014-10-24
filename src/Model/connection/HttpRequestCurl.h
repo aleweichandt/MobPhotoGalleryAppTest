@@ -18,6 +18,7 @@ private:
 
 	CURL* mCurl;
 
+	void _performHEAD();
 	void _performGET();
 	void _performRangeGET(int range);
 	void _performPOST();
