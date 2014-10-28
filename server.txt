@@ -1,0 +1,4 @@
+server must contain:
+INIT.json with format
+{"native_connection":<boolean>,"files":[{"name":<string>,"url":<string>},...]}
+zip files with images inside

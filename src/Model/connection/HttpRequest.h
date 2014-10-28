@@ -37,6 +37,7 @@ public:
 	void update(int dt);
 
 //result
+	unsigned long	getContentLength();
 	unsigned int	getResultCode();
 	size_t			getResult(char* &result); //TODO check result data type
 	

@@ -13,8 +13,11 @@
 #include <tchar.h>
 #include <vector>
 #include <map>
+#include <algorithm>
+#include <functional>
 #include <sstream>
 #include <iostream>
+#include <fstream>
 
 #ifdef _DEBUG
 #define DEBUG_LOG 1

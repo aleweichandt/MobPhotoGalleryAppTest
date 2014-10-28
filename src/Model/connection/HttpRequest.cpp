@@ -45,6 +45,16 @@ void HttpRequest::setRangeBytesOffset(unsigned long offset) {
 	mBytesOffset = offset;
 }
 
+unsigned long HttpRequest::getContentLength() {
+	if(!mContentLength) {
+		_performHEAD();
+		if(mResultCode != 200) {
+			return 0;
+		}
+	}
+	return mContentLength;
+}
+
 unsigned int HttpRequest::getResultCode() {
 	return mResultCode; 
 };
@@ -78,15 +88,20 @@ void HttpRequest::send(bool async)
 void HttpRequest::update(int dt) {
 	switch(mState) {
 		case HRS_INIT: {
-			_performHEAD();
-			mState = (mResultCode==200)?HRS_RUN:HRS_DONE;
+			if(!mContentLength || mMethod != POST) {
+				_performHEAD();
+				mState = (mResultCode==200)?HRS_RUN:HRS_DONE;
+			} else {
+				mState = HRS_RUN;
+			}
 			break;
 		}
 		case HRS_RUN: {
 			if(mMethod == POST) {
 				_performPOST();
 				mState = HRS_DONE;
-			} else {
+			} 
+			if(mMethod == GET) {
 				int bytes = (dt?dt:1) * RANGE_SPEED;
 				_performRangeGET(bytes);
 				if(mResultCode != 206) {

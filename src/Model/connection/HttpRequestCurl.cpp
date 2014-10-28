@@ -53,7 +53,7 @@ void HttpRequestCurl::_performGET() {
 	}
 	mResult = chunk.memory;
 	mResultSize = chunk.size;
-	mBytesOffset += chunk.size;
+	mBytesOffset = chunk.size;
 }
 
 void HttpRequestCurl::_performRangeGET(int range) {
@@ -62,7 +62,7 @@ void HttpRequestCurl::_performRangeGET(int range) {
 		nextOffset = mContentLength;
 	}
 	std::ostringstream rangeStr;
-	rangeStr << (mBytesOffset?mBytesOffset+1:0) << "-" << nextOffset;
+	rangeStr << mBytesOffset << "-" << nextOffset;
 	curl_easy_setopt(mCurl, CURLOPT_RANGE, rangeStr.str().c_str());
 	this->_performGET();
 }

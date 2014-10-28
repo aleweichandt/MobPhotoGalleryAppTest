@@ -11,7 +11,17 @@ mInitRequest(0){
 }
 
 PhotoGallery::~PhotoGallery() {
-
+	if(mInitRequest) {	
+		free(mInitRequest);
+	}
+	if(!mPhotoDirectories.empty()) {
+		PhotoDirectory* pd = mPhotoDirectories.back();
+		mPhotoDirectories.pop_back();
+		if(pd) {
+			free(pd);
+		}
+	}
+	mPhotoDirectories.clear();
 }
 
 void PhotoGallery::update(int dt) {
@@ -24,7 +34,7 @@ void PhotoGallery::update(int dt) {
 #endif
 			std::string initPath;
 			initPath = SERVER_BASE_URL
-			initPath += "/INIT.json";
+			initPath += "INIT.json";
 			mInitRequest = new HttpRequestCurl();
 			mInitRequest->setMethod(GET);
 			mInitRequest->setUrl(initPath);
@@ -37,6 +47,11 @@ void PhotoGallery::update(int dt) {
 	}
 	case G_STATE_RUN: {
 		//ImageDirectories created and downloading by theirselves
+		std::vector<PhotoDirectory*>::iterator it = mPhotoDirectories.begin();
+		while(it != mPhotoDirectories.end()) {
+			PhotoDirectory* pd = (*it++);
+			pd->update(dt);
+		}
 		break;
 	}
 	case G_STATE_END: {
@@ -62,7 +77,36 @@ void PhotoGallery::onComplete(HttpRequest* req){
 		Json::Value init;
 		if(reader.parse(jsonstr,init)) {
 			//TODO create PhotoDirs
-			mState = G_STATE_RUN;
+			if(init.isObject()) {
+				boolean nativeConnection = false;
+				Json::Value native = init["native_connection"];
+				if(native.isBool()) {
+					nativeConnection = native.asBool();
+				}
+				Json::Value files = init["files"];
+				if(files.isArray()) {
+					Json::Value::iterator it = files.begin();
+					while (it != files.end())
+					{
+						Json::Value file = (*it++);
+						if(!file["name"].isString() ||
+						   !file["url"].isString() ) {
+							   continue;
+						}
+						std::string name = file["name"].asString();
+						std::string url = SERVER_BASE_URL;
+						url += file["url"].asString();
+#ifdef DEBUG_LOG
+						std::cout << "CREATING FILE:" << name << " - URL:" << url << "\n";
+#endif
+						PhotoDirectory* pd = new PhotoDirectory(name, url, nativeConnection);
+						mPhotoDirectories.push_back(pd);
+					}
+				}
+				mState = G_STATE_RUN;
+			} else {
+				mState = G_STATE_END;
+			}
 		}
 	} else {
 		mInitRequest = 0;
