@@ -6,8 +6,10 @@ class PhotoObject {
 public:
 	PhotoObject();
 	virtual ~PhotoObject();
-private:
 
+	void setInfo(char* info, int size);
+private:
+	char* mInfo;
 };
 
 #endif

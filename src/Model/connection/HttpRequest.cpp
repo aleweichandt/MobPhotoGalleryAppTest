@@ -94,6 +94,7 @@ void HttpRequest::update(int dt) {
 			} else {
 				mState = HRS_RUN;
 			}
+			mResultCode = 0;
 			break;
 		}
 		case HRS_RUN: {

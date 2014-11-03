@@ -13,6 +13,9 @@
     <Filter Include="src\model\connection">
       <UniqueIdentifier>{6112ca2b-2320-4e65-9a6f-0e998f8ce792}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\model\utils">
+      <UniqueIdentifier>{9b722e10-bc14-43cc-8453-ad31437828dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\stdafx.cpp">
@@ -36,6 +39,9 @@
     <ClCompile Include="src\Model\connection\HttpRequest.cpp">
       <Filter>src\model\connection</Filter>
     </ClCompile>
+    <ClCompile Include="src\Model\utils\Unzipper.cpp">
+      <Filter>src\model\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\stdafx.h">
@@ -58,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="src\Model\connection\HttpRequestCurl.h">
       <Filter>src\model\connection</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model\utils\Unzipper.h">
+      <Filter>src\model\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

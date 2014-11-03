@@ -2,6 +2,7 @@
 #include "PhotoDirectory.h"
 #include "PhotoObject.h"
 #include "connection\HttpRequestCurl.h"
+#include "utils\Unzipper.h"
 
 PhotoDirectory::PhotoDirectory(std::string name, std::string url, bool native):
 mState(D_STATE_INIT),
@@ -39,7 +40,7 @@ void PhotoDirectory::update(int dt) {
 		unsigned long urllen = mRequest->getContentLength();
 		if(urllen == getDownloadedFileSize()) { //TODO fix
 			free(mRequest);
-			mState = D_STATE_DONE;
+			mState = D_STATE_UNZIP;
 		} else {
 			mRequest->send();
 			mState = D_STATE_DOWNLOAD;
@@ -48,6 +49,17 @@ void PhotoDirectory::update(int dt) {
 	}
 	case D_STATE_DOWNLOAD: {
 		mRequest->update(dt);
+		break;
+	}
+	case D_STATE_UNZIP: {
+		Unzipper un(getFileName());
+		int len = un.getDirectorySize();
+		for(int i=0; i<len; i++) {
+			PhotoObject* po = new PhotoObject();
+			po->setInfo(un.getFileData(i), un.getFileSize(i));
+			mPhotos.push_back(po);
+		}
+		mState = D_STATE_DONE;
 		break;
 	}
 	case D_STATE_DONE: {
@@ -77,7 +89,7 @@ void PhotoDirectory::onUpdate(HttpRequest* req){
 }
 
 void PhotoDirectory::onComplete(HttpRequest* req){
-	mState = D_STATE_DONE;
+	mState = D_STATE_UNZIP;
 #ifdef DEBUG_LOG
 	std::cout << "file:" << mName << " DONE...\n";
 #endif

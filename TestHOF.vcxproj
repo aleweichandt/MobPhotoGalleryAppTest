@@ -56,14 +56,14 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>CURL_STATICLIB;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CURL_STATICLIB;ZLIB_WINAPI;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)libs\curl\include;$(SolutionDir)libs\jsoncpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)libs\curl\include;$(SolutionDir)libs\jsoncpp\include;$(SolutionDir)libs\zlib\;$(SolutionDir)libs\zlib\contrib\minizip\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcurld.lib;ws2_32.lib;wldap32.lib;lib_json.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurld.lib;ws2_32.lib;wldap32.lib;lib_json.lib;zlibstat.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)build\$(Platform)\libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -91,6 +91,7 @@
     <ClCompile Include="src\Model\PhotoDirectory.cpp" />
     <ClCompile Include="src\Model\PhotoGallery.cpp" />
     <ClCompile Include="src\Model\PhotoObject.cpp" />
+    <ClCompile Include="src\Model\utils\Unzipper.cpp" />
     <ClCompile Include="src\stdafx.cpp" />
     <ClCompile Include="src\TestHOF.cpp" />
   </ItemGroup>
@@ -100,6 +101,7 @@
     <ClInclude Include="src\Model\PhotoDirectory.h" />
     <ClInclude Include="src\Model\PhotoGallery.h" />
     <ClInclude Include="src\Model\PhotoObject.h" />
+    <ClInclude Include="src\Model\utils\Unzipper.h" />
     <ClInclude Include="src\stdafx.h" />
     <ClInclude Include="src\targetver.h" />
   </ItemGroup>

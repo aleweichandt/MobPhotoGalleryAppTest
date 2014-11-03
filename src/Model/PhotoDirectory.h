@@ -14,6 +14,7 @@ class PhotoDirectory : public HttpRequest::HttpRequestInterface{
 		D_STATE_ERROR = -1,
 		D_STATE_INIT,
 		D_STATE_DOWNLOAD,
+		D_STATE_UNZIP,
 		D_STATE_DONE
 	};
 public:
