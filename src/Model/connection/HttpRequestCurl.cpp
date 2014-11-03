@@ -68,7 +68,17 @@ void HttpRequestCurl::_performRangeGET(int range) {
 }
 
 void HttpRequestCurl::_performPOST() {
-	//TODO
+	curl_easy_setopt(mCurl, CURLOPT_URL, mUrl.c_str());
+	curl_easy_setopt(mCurl, CURLOPT_POST, 1L);
+	//TODO add headers
+	curl_easy_setopt(mCurl, CURLOPT_POSTFIELDS, mBody);
+	curl_easy_setopt(mCurl, CURLOPT_POSTFIELDSIZE, mBodySize);
+	CURLcode resp = curl_easy_perform(mCurl);
+	if(resp == CURLE_OK) {
+		long respcode;
+		curl_easy_getinfo(mCurl,CURLINFO_RESPONSE_CODE, &respcode);
+		mResultCode = (unsigned int) respcode;
+	}
 }
 
 size_t HttpRequestCurl::WriteMemoryCallback(void *contents, size_t size, size_t nmemb, void *userp)

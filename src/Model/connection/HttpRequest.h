@@ -30,7 +30,7 @@ public:
 	void setUrl(const std::string url);
 	void setMethod(HTTP_METHOD method);
 	void setHeader(const std::string headerName, const std::string headerValue);	
-	void setBody(const char* body);
+	void setBody(const char* body, size_t size);
 	void setRangeBytesOffset(unsigned long offset);
 	void send(bool async = true);
 //update
@@ -53,6 +53,7 @@ protected:
 	HTTP_METHOD							mMethod;
 	std::map<std::string,std::string>	mHeaders;
 	char*								mBody;
+	size_t								mBodySize;
 
 //must fill this values
 	unsigned long						mBytesOffset;

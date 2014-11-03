@@ -37,8 +37,13 @@ void HttpRequest::setHeader(std::string headerName, std::string headerValue) {
 	mHeaders[headerName] = headerValue;
 }
 
-void HttpRequest::setBody(const char* body) {
-	memcpy(mBody, body, sizeof(body)*sizeof(unsigned char));
+void HttpRequest::setBody(const char* body, size_t size) {
+	mBodySize = size;
+	if(mBody) {
+		free(mBody);
+	}
+	mBody = (char*)malloc(mBodySize);
+	memcpy(mBody, body, mBodySize);
 }
 
 void HttpRequest::setRangeBytesOffset(unsigned long offset) {
